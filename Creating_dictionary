@@ -1,0 +1,54 @@
+
+--*******Vendor
+select distinct [VendorID]  as [ID]
+into #t1 
+from sor.fact_tripdata
+where [VendorID] is not null
+
+select [ID]
+      ,case when [ID] = 1 then 'Creative Mobile Technologies, LLC'
+		  when [ID] = 2 then 'VeriFone Inc.'
+		  when [ID] is not null then 'Unknown_category' 
+		  end as [Name]
+into sor.Vendor
+from #t1
+drop table #t1
+
+
+--*******RateCode
+select distinct [RateCodeID] as [ID]
+into #t2 
+from sor.fact_tripdata
+where [RateCodeID] is not null
+
+select [ID]
+      ,case when [ID] = 1 then 'Standard rate'
+		  when [ID] = 2 then 'JFK'
+		  when [ID] = 3 then 'Newark'
+		  when [ID] = 4 then 'Nassau or Westchester'
+		  when [ID] = 5 then 'Negotiated fare'
+		  when [ID] = 6 then 'Group ride'
+		  when [ID] is not null then 'Unknown_category' 
+		  end as [Name]
+into sor.RateCode
+from #t2 
+drop table #t2 
+
+--*******Payment_type
+select distinct [Payment_type] as [ID]
+--into #t3 
+from sor.fact_tripdata
+where [Payment_type] is not null
+
+select [ID]
+      ,case when [ID] = 1 then 'Credit card'
+		  when [ID] = 2 then 'Cash'
+		  when [ID] = 3 then 'No charge'
+		  when [ID] = 4 then 'Dispute'
+		  when [ID] = 5 then 'Unknown'
+		  when [ID] = 6 then 'Voided trip'
+		  when [ID] is not null then 'Unknown_category' 
+		  end as [Name]
+into sor.Payment_type
+from #t3 
+drop table #t3
