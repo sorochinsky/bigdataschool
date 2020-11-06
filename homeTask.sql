@@ -78,32 +78,14 @@ INSERT INTO sor.fact_tripdata
 
 --create dictionary
 --****Vendor
-CREATE TABLE sor.Vendor
-(      [ID] INT
-      ,[Mame] varchar(255)
-)
-WITH
-(   CLUSTERED COLUMNSTORE INDEX
-,   DISTRIBUTION = REPLICATE  
-)
+CREATE TABLE sor.Vendor ([ID] INT, [Name] varchar(255))
+WITH (CLUSTERED COLUMNSTORE INDEX, DISTRIBUTION = REPLICATE)
 --****RateCode
-CREATE TABLE sor.RateCode
-(      [ID] INT
-      ,[Mame] varchar(255)
-)
-WITH
-(   CLUSTERED COLUMNSTORE INDEX
-,   DISTRIBUTION = REPLICATE  
-)
+CREATE TABLE sor.RateCode ([ID] INT, [Name] varchar(255))
+WITH (CLUSTERED COLUMNSTORE INDEX, DISTRIBUTION = REPLICATE)
 --****Payment_type
-CREATE TABLE sor.Payment_type
-(      [ID] INT
-      ,[Mame] varchar(255)
-)
-WITH
-(   CLUSTERED COLUMNSTORE INDEX
-,   DISTRIBUTION = REPLICATE 
-)
+CREATE TABLE sor.Payment_type ([ID] INT, [Name] varchar(255))
+WITH (CLUSTERED COLUMNSTORE INDEX, DISTRIBUTION = REPLICATE)
 
 --insert values
 INSERT INTO sor.Vendor VALUES (1, 'Creative Mobile Technologies, LLC');
