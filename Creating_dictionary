@@ -1,26 +1,37 @@
+--create dictionary
+--****Vendor
+CREATE TABLE sor.Vendor ([ID] INT, [Name] varchar(255))
+WITH (CLUSTERED COLUMNSTORE INDEX, DISTRIBUTION = REPLICATE)
+--****RateCode
+CREATE TABLE sor.RateCode ([ID] INT, [Name] varchar(255))
+WITH (CLUSTERED COLUMNSTORE INDEX, DISTRIBUTION = REPLICATE)
+--****Payment_type
+CREATE TABLE sor.Payment_type ([ID] INT, [Name] varchar(255))
+WITH (CLUSTERED COLUMNSTORE INDEX, DISTRIBUTION = REPLICATE)
 
---*******Vendor
+--*******Vendor unique
 select distinct [VendorID]  as [ID]
 into #t1 
 from sor.fact_tripdata
 where [VendorID] is not null
 
+INSERT INTO sor.Vendor
 select [ID]
       ,case when [ID] = 1 then 'Creative Mobile Technologies, LLC'
 		  when [ID] = 2 then 'VeriFone Inc.'
 		  when [ID] is not null then 'Unknown_category' 
 		  end as [Name]
-into sor.Vendor
 from #t1
 drop table #t1
 
 
---*******RateCode
+--*******RateCode unique
 select distinct [RateCodeID] as [ID]
 into #t2 
 from sor.fact_tripdata
 where [RateCodeID] is not null
 
+INSERT INTO sor.RateCode
 select [ID]
       ,case when [ID] = 1 then 'Standard rate'
 		  when [ID] = 2 then 'JFK'
@@ -30,16 +41,16 @@ select [ID]
 		  when [ID] = 6 then 'Group ride'
 		  when [ID] is not null then 'Unknown_category' 
 		  end as [Name]
-into sor.RateCode
 from #t2 
 drop table #t2 
 
---*******Payment_type
+--*******Payment_type unique
 select distinct [Payment_type] as [ID]
---into #t3 
+into #t3 
 from sor.fact_tripdata
 where [Payment_type] is not null
 
+INSERT INTO sor.Payment_type
 select [ID]
       ,case when [ID] = 1 then 'Credit card'
 		  when [ID] = 2 then 'Cash'
@@ -49,6 +60,5 @@ select [ID]
 		  when [ID] = 6 then 'Voided trip'
 		  when [ID] is not null then 'Unknown_category' 
 		  end as [Name]
-into sor.Payment_type
 from #t3 
 drop table #t3
