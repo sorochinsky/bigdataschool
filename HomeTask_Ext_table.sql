@@ -1,8 +1,11 @@
 CREATE EXTERNAL FILE FORMAT [soroc_file] WITH (FORMAT_TYPE = DELIMITEDTEXT, FORMAT_OPTIONS (FIELD_TERMINATOR = N',', FIRST_ROW = 2, USE_TYPE_DEFAULT = False))
 
-drop EXTERNAL table fact_tripdata_ex
-drop  EXTERNAL DATA SOURCE soroc_blob
-drop DATABASE SCOPED CREDENTIAL SorAzureBlobStorageCredential
+IF EXISTS (SELECT * FROM sys.external_tables where name = 'fact_tripdata_ex')
+  DROP EXTERNAL TABLE fact_tripdata_ex;
+IF EXISTS (SELECT * FROM sys.external_data_sources where name = 'soroc_blob')
+  DROP EXTERNAL DATA SOURCE soroc_blob;
+IF EXISTS (SELECT * from sys.database_scoped_credentials where name ='SorAzureBlobStorageCredential')
+  DROP DATABASE SCOPED CREDENTIAL SorAzureBlobStorageCredential;
 
 -- Create Storage Credential
 CREATE DATABASE SCOPED CREDENTIAL SorAzureBlobStorageCredential
