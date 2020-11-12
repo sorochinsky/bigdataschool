@@ -1,0 +1,24 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"linkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"schemaLinkedService": {
+						"referenceName": "AzureDataLakeStorage1",
+						"type": "LinkedServiceReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tentity: 'dir',\n\tformat: 'cdm',\n\tmanifestType: 'manifest',\n\tmanifestName: 'Geolife Trajectories 1.3.zip',\n\tcorpusPath: '',\n\tcorpusStore: 'adlsgen2',\n\tadlsgen2_fileSystem: 'geolife',\n\tfolderPath: '',\n\tfileSystem: 'geolife') ~> source1"
+		}
+	}
+}
